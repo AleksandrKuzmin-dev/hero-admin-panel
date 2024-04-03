@@ -1,0 +1,61 @@
+import { useDispatch } from 'react-redux';
+import { heroesFetched, heroesFetchingError } from '../../actions';
+import { useHttp } from '../../hooks/http.hook';
+
+import img from '../../assets/hero_img.jpg'
+
+const HeroesListItem = ({name, description, element, id}) => {
+
+    const dispatch = useDispatch();
+    const {request} = useHttp();
+
+    const deleteHero = () => {
+        request(`http://localhost:3001/heroes/${id}`, 'DELETE')
+            .then(
+                request("http://localhost:3001/heroes")
+                    .then(data => dispatch(heroesFetched(data)))
+                    .catch(() => dispatch(heroesFetchingError()))
+            )
+            .catch(err => console.log(err));
+       
+    }
+
+    let elementClassName;
+
+    switch (element) {
+        case 'fire':
+            elementClassName = 'bg-danger bg-gradient';
+            break;
+        case 'water':
+            elementClassName = 'bg-primary bg-gradient';
+            break;
+        case 'wind':
+            elementClassName = 'bg-success bg-gradient';
+            break;
+        case 'earth':
+            elementClassName = 'bg-secondary bg-gradient';
+            break;
+        default:
+            elementClassName = 'bg-warning bg-gradient';
+    }
+
+    return (
+        <li 
+            className={`card flex-row mb-4 shadow-lg text-white ${elementClassName}`}>
+            <img src={img} 
+                 className="img-fluid w-25 d-inline" 
+                 alt="unknown hero" 
+                 style={{'objectFit': 'cover'}}/>
+            <div className="card-body">
+                
+                <h3 className="card-title">{name}</h3>
+                <p className="card-text">{description}</p>
+            </div>
+            <span className="position-absolute top-0 start-100 translate-middle badge border rounded-pill bg-light">
+                <button onClick={deleteHero} type="button" className="btn-close btn-close" aria-label="Close"></button>
+            </span>
+        </li>
+    )
+}
+
+export default HeroesListItem;
