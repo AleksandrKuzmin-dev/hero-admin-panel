@@ -35,3 +35,17 @@ export const filtersError = () => {
         type: 'FILTERS_ERROR'
     }
 }
+
+export const actionFilterChanged = (element) => {
+    return {
+        type: 'ACTIVE_FILTER_CHANGED',
+        payload: element
+    }
+}
+
+export const filteredHeroesSet = (heroes) => {
+    return {
+        type: 'FILTERED_HEROES_SET',
+        payload: heroes
+    }
+}
