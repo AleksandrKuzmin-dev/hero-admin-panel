@@ -13,7 +13,7 @@ import Spinner from "../spinner/Spinner";
 
 const HeroesFilters = () => {
 
-    const {filters, filtersLoadingStatus} = useSelector(state => state);
+    const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
     const {getHeroesFilters, changeActiveFilter} = HeroesService();
 
     useEffect(() => {

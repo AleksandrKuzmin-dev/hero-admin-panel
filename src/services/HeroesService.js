@@ -1,20 +1,18 @@
 import { useHttp } from "../hooks/http.hook";
-import { useDispatch, useSelector } from "react-redux";
-import { heroesFetching, heroesFetched, heroesFetchingError, filtersFetching, filtersFetched, filtersError, actionFilterChanged, filteredHeroesSet } from "../actions";
+import { useDispatch } from "react-redux";
+import { heroesFetching, heroesFetched, heroesFetchingError, filtersFetching, filtersFetched, filtersError, actionFilterChanged } from "../actions";
 
 const HeroesService = () => {
     const _apiBase = 'http://localhost:3001/';
 
     const {request} = useHttp();
     const dispatch = useDispatch();
-    const {activeFilter, heroes} = useSelector(state => state);
 
     const getHeroesList = () => {
         dispatch(heroesFetching()); 
         request(`${_apiBase}heroes`)
             .then(data => {
                 dispatch(heroesFetched(data));
-                filteringHeroes(data, activeFilter);
             })
             .catch(() => dispatch(heroesFetchingError()))
     }
@@ -42,13 +40,6 @@ const HeroesService = () => {
 
     const changeActiveFilter = (element) => {
         dispatch(actionFilterChanged(element));
-        filteringHeroes(heroes, element);
-    }
-
-    const filteringHeroes = (arr, element) => {
-        dispatch(filteredHeroesSet(element === 'all' ?
-                                    arr :
-                                    arr.filter(hero => hero.element === element)))
     }
 
     return {

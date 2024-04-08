@@ -19,7 +19,7 @@ import HeroesService from "../../services/HeroesService";
 const HeroesAddForm = () => {
 
     const {createHero} = HeroesService();
-    const {filters} = useSelector(state => state);
+    const {filters} = useSelector(state => state.filters);
 
     const renderFilters = () => {
         if (filters.length !== 0) {
