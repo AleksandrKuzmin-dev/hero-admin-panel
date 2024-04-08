@@ -13,10 +13,16 @@
       "element": "wind"
     },
     {
-      "id": 3,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
-      "element": "water"
+      "name": "Аквамен",
+      "description": "Владыка моря",
+      "element": "water",
+      "id": "10c9df1b-0004-4e0d-821a-40d4dd3c1549"
+    },
+    {
+      "name": "Червяк Билли",
+      "description": "Роет туннели как бульдозер",
+      "element": "earth",
+      "id": "5ea35f15-baaf-410d-b0ba-e6425238da1a"
     }
   ],
   "filters": [

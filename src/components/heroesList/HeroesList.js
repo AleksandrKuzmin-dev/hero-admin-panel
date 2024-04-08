@@ -1,14 +1,11 @@
 
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import HeroesService from '../../services/HeroesService';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
-
-// Задача для этого компонента:
-// При клике на "крестик" идет удаление персонажа из общего состояния
-// Усложненная задача:
-// Удаление идет и с json файла при помощи метода DELETE
+import './heroesList.css';
 
 const HeroesList = () => {
     const {filteredHeroes, heroesLoadingStatus} = useSelector(state => state);
@@ -27,20 +24,29 @@ const HeroesList = () => {
     }
 
     const renderHeroesList = (arr) => {
-        if (arr.length === 0) {
-            return <h5 className="text-center mt-5">Героев пока нет</h5>
-        }
-
         return arr.map(({id, ...props}) => {
-            return <HeroesListItem key={id} id={id} {...props}/>
+            return (
+                <CSSTransition classNames="item" timeout={500} key={id}>
+                    <HeroesListItem id={id} {...props}/>
+                </CSSTransition>
+            )
         })
     }
 
-    const elements = renderHeroesList(filteredHeroes);
+    const heroesListEmpty = (
+        <CSSTransition classNames="item" timeout={500}>
+            <h5 className="text-center mt-5">Героев пока нет</h5>
+        </CSSTransition>
+    )
+
+    const elements = filteredHeroes.length === 0 ? heroesListEmpty : renderHeroesList(filteredHeroes)
+    
     return (
-        <ul>
-            {elements}
-        </ul>
+            <ul>
+                <TransitionGroup component={null}>
+                    {elements}
+                </TransitionGroup>
+            </ul>
     )
 }
 
