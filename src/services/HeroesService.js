@@ -1,6 +1,6 @@
 import { useHttp } from "../hooks/http.hook";
 import { useDispatch } from "react-redux";
-import { heroesFetching, heroesFetched, heroesFetchingError, filtersFetching, filtersFetched, filtersError, actionFilterChanged } from "../actions";
+import { fetchHeroes, heroesFetchingError, fetchFilters, actionFilterChanged } from "../actions";
 
 const HeroesService = () => {
     const _apiBase = 'http://localhost:3001/';
@@ -9,19 +9,11 @@ const HeroesService = () => {
     const dispatch = useDispatch();
 
     const getHeroesList = () => {
-        dispatch(heroesFetching()); 
-        request(`${_apiBase}heroes`)
-            .then(data => {
-                dispatch(heroesFetched(data));
-            })
-            .catch(() => dispatch(heroesFetchingError()))
+        dispatch(fetchHeroes(request)); 
     }
 
     const getHeroesFilters = () => {
-        dispatch(filtersFetching());
-        request(`${_apiBase}filters`)
-            .then(data => dispatch(filtersFetched(data)))
-            .catch(() => dispatch(filtersError()));
+        dispatch(fetchFilters(request));
     }
 
     const deleteHero = (id) => {
