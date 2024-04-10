@@ -1,6 +1,8 @@
 import { useHttp } from "../hooks/http.hook";
 import { useDispatch } from "react-redux";
-import { fetchHeroes, heroesFetchingError, fetchFilters, actionFilterChanged } from "../actions";
+import { fetchHeroes, fetchFilters } from "../actions";
+import { heroesFetchingError } from "../components/heroesList/heroesSlice";
+import { actionFilterChanged } from "../components/heroesFilters/filtersSlice";
 
 const HeroesService = () => {
     const _apiBase = 'http://localhost:3001/';
