@@ -1,11 +1,12 @@
-import HeroesService from '../../services/HeroesService';
+import { useDispatch } from 'react-redux';
 import img from '../../assets/hero_img.jpg';
+import { deleteHero } from '../heroesList/heroesSlice';
 
 const HeroesListItem = ({name, description, element, id}) => {
-    const {deleteHero} = HeroesService();
+    const dispatch = useDispatch();
 
     const onDeleteHero = () => {
-       deleteHero(id);
+        dispatch(deleteHero(id));
     }
 
     let elementClassName;

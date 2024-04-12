@@ -13,12 +13,11 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import { v4 as getUniqID } from 'uuid';
-import { useSelector } from "react-redux";
-import HeroesService from "../../services/HeroesService";
+import { useSelector, useDispatch } from "react-redux";
+import { createHero } from "../heroesList/heroesSlice";
 
 const HeroesAddForm = () => {
-
-    const {createHero} = HeroesService();
+    const dispatch = useDispatch();
     const {filters} = useSelector(state => state.filters);
 
     const renderFilters = () => {
@@ -56,7 +55,7 @@ const HeroesAddForm = () => {
             }
             onSubmit={(values, actions) => {
                 const id = getUniqID();
-                createHero({...values, id});
+                dispatch(createHero({...values, id}));
                 actions.resetForm();
                 
             }}

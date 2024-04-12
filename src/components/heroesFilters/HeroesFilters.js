@@ -6,18 +6,17 @@
 // Изменять json-файл для удобства МОЖНО!
 // Представьте, что вы попросили бэкенд-разработчика об этом
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import HeroesService from "../../services/HeroesService";
 import Spinner from "../spinner/Spinner";
+import { fetchFilters, changeActiveFilter } from "./filtersSlice";
 
 const HeroesFilters = () => {
-
+    const dispatch = useDispatch();
     const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
-    const {getHeroesFilters, changeActiveFilter} = HeroesService();
 
     useEffect(() => {
-        getHeroesFilters();
+        dispatch(fetchFilters());
         // eslint-disable-next-line
     }, [])
 
@@ -55,7 +54,7 @@ const HeroesFilters = () => {
                 classList = "btn btn-warning"
                 break;
         };
-        return <button onClick={() => changeActiveFilter(value)} className={classList} key={value}>{name}</button>     
+        return <button onClick={() => dispatch(changeActiveFilter(value))} className={classList} key={value}>{name}</button>     
     }
 
     if (filtersLoadingStatus === "loading") {

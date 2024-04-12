@@ -1,20 +1,20 @@
 
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { createSelector } from 'reselect';
+import { useSelector, useDispatch } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import HeroesService from '../../services/HeroesService';
+import { fetchHeroes } from './heroesSlice';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 import './heroesList.css';
 
 const HeroesList = () => {
-
-    const {getHeroesList} = HeroesService();
+    const dispatch = useDispatch();
     const [firstLoadEnded, setFirstLoadEnded] = useState(false);
 
     useEffect(() => {
-        getHeroesList();
+        dispatch(fetchHeroes());
+        // eslint-disable-next-line
     }, []);
 
     const filteredHeroesSelector = createSelector(
