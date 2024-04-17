@@ -29,7 +29,6 @@ export const createHero = createAsyncThunk(
 export const deleteHero = createAsyncThunk(
     'heroes/deleteHero',
     async (id, {dispatch}) => {
-        console.log('deleteHero')
         const {request} = useHttp();
         const response = await request(`http://localhost:3001/heroes/${id}`, 'DELETE');
 
